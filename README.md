@@ -1,4 +1,4 @@
-# Internship 
+![Screenshot 2025-01-10 110307](https://github.com/user-attachments/assets/39ae3803-86d5-4b3c-bf7d-d7ce24ab1d07)# Internship 
 Project Report: Real-Time Face Recognition Using Keras and OpenCV
 
 1. Introduction
@@ -79,6 +79,8 @@ cv2.imshow("Webcam Image", image)
 6. Results
 
 The system successfully captures video input, processes each frame, and outputs the predicted class with a corresponding confidence score.
+![Screenshot 2025-01-10 110307](https://github.com/user-attachments/assets/fb45551c-2a9b-43ef-929a-f45294659ed3)
+
 
 7. Challenges Faced
 
@@ -106,5 +108,6 @@ Keras Documentation
 
 OpenCV Documentation
 
-Google Teachable Machine
+Google Teachable Machine            
+![Screenshot 2025-01-10 110307](https://github.com/user-attachments/assets/c38f1d85-b8a2-45c0-9fd6-24dcd210d041)
 
