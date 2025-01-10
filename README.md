@@ -1,4 +1,4 @@
-![Screenshot 2025-01-10 110307](https://github.com/user-attachments/assets/39ae3803-86d5-4b3c-bf7d-d7ce24ab1d07)# Internship 
+ Internship 
 Project Report: Real-Time Face Recognition Using Keras and OpenCV
 
 1. Introduction
@@ -12,6 +12,8 @@ To implement a face recognition system using a pre-trained model.
 To integrate real-time video processing using OpenCV.
 
 To display prediction results with confidence scores.
+![WhatsApp Image 2025-01-10 at 12 03 56 PM](https://github.com/user-attachments/assets/429145b2-0263-496f-ad1c-b84ca728aee4)
+
 
 3. Technologies Used
 
