@@ -1,115 +1,149 @@
- Internship 
-Project Report: Real-Time Face Recognition Using Keras and OpenCV
+Detailed Line-by-Line Explanation of Face Recognition Python Script
 
-1. Introduction
+1. Importing Required Libraries
 
-This project focuses on implementing a real-time face recognition system using a deep learning model trained with Google Teachable Machine and deployed using Keras and OpenCV. The system captures video from the webcam, processes the frames, and predicts the class of the detected face with confidence scores.
+from keras.models import load_model
+import cv2
+import numpy as np
+import tensorflow as tf
+import os
 
-2. Objectives
+load_model: Used to load a pre-trained Keras model saved in the keras_model.h5 file.
 
-To implement a face recognition system using a pre-trained model.
+cv2: OpenCV library for real-time computer vision tasks like capturing and processing images.
 
-To integrate real-time video processing using OpenCV.
+numpy: For numerical operations, especially for handling image data in array format.
 
-To display prediction results with confidence scores.
-![WhatsApp Image 2025-01-10 at 12 03 56 PM](https://github.com/user-attachments/assets/429145b2-0263-496f-ad1c-b84ca728aee4)
+tensorflow: Checks hardware resources (e.g., GPU) and supports deep learning computations.
 
+os: Interacts with the operating system to configure environment variables.
 
-3. Technologies Used
+2. Checking GPU Availability
 
-Python
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
-TensorFlow
+Prints the number of GPUs available for TensorFlow processing.
 
-Keras
+3. Disabling GPU (Force CPU Usage)
 
-OpenCV
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
-NumPy
+Forces the program to use the CPU by disabling the GPU.
 
-4. System Requirements
+4. Configuring NumPy and Loading the Model
 
-Python 3.x
-
-TensorFlow 2.x
-
-Keras
-
-OpenCV
-
-NumPy
-
-Webcam
-
-5. Methodology
-
-5.1 Loading the Model and Labels
-
-A pre-trained model (keras_model.h5) and label file (labels.txt) are loaded for prediction.
-
+np.set_printoptions(suppress=True)
 model = load_model("keras_model.h5", compile=False)
 class_names = open("labels.txt", "r").readlines()
 
-5.2 Camera Initialization
+np.set_printoptions(suppress=True): Prevents scientific notation in NumPy outputs.
 
-OpenCV's VideoCapture is used to access the webcam for real-time video capture.
+model: Loads the pre-trained model for prediction.
+
+class_names: Reads class labels from labels.txt for result interpretation.
+
+5. Accessing the Webcam
 
 camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
-5.3 Image Preprocessing
+Initializes the webcam using the DirectShow backend (CAP_DSHOW).
 
-Captured frames are resized to (224, 224) pixels to match the model's input requirements and normalized.
+Error Handling for Camera Access
 
-image_resized = cv2.resize(image, (224,224), interpolation=cv2.INTER_AREA)
-image_array = (np.asarray(image_resized, dtype=np.float32).reshape(1, 224, 224, 3) / 127.5) - 1
+if not camera.isOpened():
+    print("Error: Could not open the camera.")
+    exit()
 
-5.4 Model Prediction
+Checks if the webcam is accessible. If not, it prints an error and stops the program.
 
-The model predicts the class of the processed image, and the result is displayed with a confidence score.
+6. Continuous Frame Capture Loop
 
-prediction = model.predict(image_array)
-index = np.argmax(prediction)
-class_name = class_names[index].strip()
-confidence_score = prediction[0][index]
+while True:
+    ret, image = camera.read()
 
-5.5 Display Results
+Continuously captures frames from the webcam.
 
-The prediction and confidence score are printed, and the webcam feed is displayed until the ESC key is pressed.
+ret: Boolean indicating if the frame was captured successfully.
 
-cv2.imshow("Webcam Image", image)
+image: Captured frame.
 
-6. Results
+Error Handling for Frame Capture
 
-The system successfully captures video input, processes each frame, and outputs the predicted class with a corresponding confidence score.
-![Screenshot 2025-01-10 110307](https://github.com/user-attachments/assets/fb45551c-2a9b-43ef-929a-f45294659ed3)
+    if not ret:
+        print("Error: Failed to capture image from the camera.")
+        break
 
+Stops the loop if frame capture fails.
 
-7. Challenges Faced
+Resizing Captured Image
 
-Camera initialization issues on different operating systems.
+    try:
+        image_resized = cv2.resize(image, (224,224), interpolation=cv2.INTER_AREA)
+    except cv2.error as e:
+        print(f"OpenCV Error: {e}")
+        break
 
-Model compatibility and GPU availability.
+Resizes the image to 224x224 pixels to fit the model's input size.
 
-8. Future Enhancements
+Uses a try-except block to handle errors during resizing.
 
-Integrate face detection to improve recognition accuracy.
+Display Webcam Feed
 
-Deploy the model in a user-friendly GUI application.
+    cv2.imshow("Webcam Image", image)
 
-Optimize performance for faster predictions.
+Displays the live webcam feed in a window titled "Webcam Image".
 
-9. Conclusion
+Preparing Image for Model Prediction
 
-This project demonstrates a basic real-time face recognition system using a deep learning model and OpenCV. It provides a foundation for more advanced applications in security and identity verification.
+    image_array = np.asarray(image_resized, dtype=np.float32).reshape(1, 224, 224, 3)
+    image_array = (image_array / 127.5) - 1
 
-10. References
+Converts the resized image to a NumPy array with shape (1, 224, 224, 3).
 
-TensorFlow Documentation
+Normalizes the pixel values to the range [-1, 1] for model compatibility.
 
-Keras Documentation
+Making Predictions
 
-OpenCV Documentation
+    prediction = model.predict(image_array)
+    index = np.argmax(prediction)
+    class_name = class_names[index].strip()
+    confidence_score = prediction[0][index]
 
-Google Teachable Machine            
-![Screenshot 2025-01-10 110307](https://github.com/user-attachments/assets/c38f1d85-b8a2-45c0-9fd6-24dcd210d041)
+model.predict: Makes a prediction on the processed image.
+
+np.argmax: Identifies the index of the highest prediction probability.
+
+class_name: Maps the predicted index to a label.
+
+confidence_score: Retrieves the prediction confidence.
+
+Displaying Prediction Results
+
+    print(f"Class: {class_name}, Confidence Score: {np.round(confidence_score * 100, 2)}%")
+
+Prints the predicted class and its confidence percentage in the console.
+
+Exiting the Program with ESC Key
+
+    keyboard_input = cv2.waitKey(1)
+    if keyboard_input == 27:
+        print("Exiting program.")
+        break
+
+cv2.waitKey(1): Waits for keyboard input.
+
+27: ASCII code for the ESC key. Ends the loop and exits if pressed.
+
+7. Releasing Resources
+
+camera.release()
+cv2.destroyAllWindows()
+
+camera.release(): Frees the webcam.
+
+cv2.destroyAllWindows(): Closes all OpenCV windows.
+
+Conclusion
+
+This Python script captures real-time webcam footage, processes it, and predicts the class of the object/person using a pre-trained model. Results are printed to the console with a confidence score, and the webcam feed is displayed live. Press ESC to stop the program.
 
