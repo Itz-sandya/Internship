@@ -2,7 +2,10 @@
 
 
 ![Screenshot 2025-01-14 104543](https://github.com/user-attachments/assets/95eb663c-7164-4cdb-bb3e-daa6bfa3e73c)
-
+![Screenshot 2025-01-14 104605](https://github.com/user-attachments/assets/39bd5eb7-ea1d-4c48-9cef-b6392cf36851)
+![Screenshot 2025-01-14 104634](https://github.com/user-attachments/assets/8f48e840-c91f-4182-b912-abf2224ef742)
+![Screenshot 2025-01-14 104824](https://github.com/user-attachments/assets/edee524e-3d09-4817-a8fa-a1f5c261c81a)
+![Screenshot 2025-01-14 104932](https://github.com/user-attachments/assets/df29008e-9b4d-461f-a871-2662eea4160e)
 
 ## 1. Importing Required Libraries
 ```python
@@ -17,7 +20,9 @@ import os
 - **numpy**: For numerical operations, especially for handling image data in array format.
 - **tensorflow**: Checks hardware resources (e.g., GPU) and supports deep learning computations.
 - **os**: Interacts with the operating system to configure environment variables.
-- 
+
+- ![Screenshot 2025-01-14 105226](https://github.com/user-attachments/assets/52ddd70c-b051-40c4-a098-7d83584f2c34)
+
 
 ## 2. Checking GPU Availability
 ```python
