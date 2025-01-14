@@ -1,4 +1,8 @@
-# Detailed Line-by-Line Explanation of Face Recognition Python Script
+#  TASK=1    Face Recognition Python 
+
+
+![Screenshot 2025-01-14 104543](https://github.com/user-attachments/assets/95eb663c-7164-4cdb-bb3e-daa6bfa3e73c)
+
 
 ## 1. Importing Required Libraries
 ```python
@@ -13,6 +17,7 @@ import os
 - **numpy**: For numerical operations, especially for handling image data in array format.
 - **tensorflow**: Checks hardware resources (e.g., GPU) and supports deep learning computations.
 - **os**: Interacts with the operating system to configure environment variables.
+- 
 
 ## 2. Checking GPU Availability
 ```python
@@ -41,6 +46,7 @@ class_names = open("labels.txt", "r").readlines()
 camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 ```
 - Initializes the webcam using the DirectShow backend (`CAP_DSHOW`).
+- 
 
 ### Error Handling for Camera Access
 ```python
@@ -77,12 +83,15 @@ while True:
 ```
 - Resizes the image to `224x224` pixels to fit the model's input size.
 - Uses a `try-except` block to handle errors during resizing.
+- 
 
 ### Display Webcam Feed
 ```python
     cv2.imshow("Webcam Image", image)
 ```
 - Displays the live webcam feed in a window titled "Webcam Image".
+- ![Screenshot 2025-01-14 105317](https://github.com/user-attachments/assets/513e0081-b56d-4385-b80d-2c82c08b2d5a)
+
 
 ### Preparing Image for Model Prediction
 ```python
@@ -103,12 +112,16 @@ while True:
 - **np.argmax**: Identifies the index of the highest prediction probability.
 - **class_name**: Maps the predicted index to a label.
 - **confidence_score**: Retrieves the prediction confidence.
+- ![Screenshot 2025-01-14 105334](https://github.com/user-attachments/assets/88d59cd4-32b9-445c-82d0-51fd02fa34ab)
+
 
 ### Displaying Prediction Results
 ```python
     print(f"Class: {class_name}, Confidence Score: {np.round(confidence_score * 100, 2)}%")
 ```
 - Prints the predicted class and its confidence percentage in the console.
+- ![Screenshot 2025-01-14 105334](https://github.com/user-attachments/assets/ce165199-a8f6-480e-9008-058fcf23d06e)
+
 
 ### Exiting the Program with ESC Key
 ```python
